@@ -8,7 +8,7 @@ class AdventCalendarTests {
 
   @Test
   fun day1Part1Test() {
-    val expenseReport = readDay1Input()
+    val expenseReport = InputReader.readDay1Input("src/test/input/Day1.txt")
 
     val result = adventCalendar.day1Part1(expenseReport)
 
@@ -18,7 +18,7 @@ class AdventCalendarTests {
 
   @Test
   fun day1Part2Test() {
-    val expenseReport = readDay1Input()
+    val expenseReport = InputReader.readDay1Input("src/test/input/Day1.txt")
 
     val result = adventCalendar.day1Part2(expenseReport)
 
@@ -28,21 +28,7 @@ class AdventCalendarTests {
 
   @Test
   fun day2Part1Test() {
-    val policyAndPasswordList = mutableListOf<Pair<SledRentalPasswordPolicy,String>>()
-    File("src/test/input/Day2.txt").useLines {
-      lines -> policyAndPasswordList.addAll(
-      lines.map {
-
-        // can be refactored to use regex instead of this mess
-        val splitPolicy = it.split(' ')
-        val min = splitPolicy[0].split('-')[0].toInt()
-        val max = splitPolicy[0].split('-')[1].toInt()
-        val character = (splitPolicy[1])[0]
-        val password = it.split(':')[1].trimStart()
-
-        Pair(SledRentalPasswordPolicy(min, max, character), password)
-      })
-    }
+    val policyAndPasswordList = InputReader.readDay2Part1Input("src/test/input/Day2.txt")
 
     val result = adventCalendar.day2Part1(policyAndPasswordList)
 
@@ -51,21 +37,7 @@ class AdventCalendarTests {
 
   @Test
   fun day2Part2Test() {
-    val policyAndPasswordList = mutableListOf<Pair<PasswordPolicy,String>>()
-    File("src/test/input/Day2.txt").useLines {
-      lines -> policyAndPasswordList.addAll(
-      lines.map {
-
-        // can be refactored to use regex instead of this mess
-        val splitPolicy = it.split(' ')
-        val position1 = splitPolicy[0].split('-')[0].toInt()
-        val position2 = splitPolicy[0].split('-')[1].toInt()
-        val character = (splitPolicy[1])[0]
-        val password = it.split(':')[1].trimStart()
-
-        Pair(PasswordPolicy(position1, position2, character), password)
-      })
-    }
+    val policyAndPasswordList = InputReader.readDay2Part2Input("src/test/input/Day2.txt")
 
     val result = adventCalendar.day2Part2(policyAndPasswordList)
 
@@ -79,7 +51,7 @@ class AdventCalendarTests {
     val moveDownCount = 1
     val moveRightCount = 3
 
-    val input = readDay3Input()
+    val input = InputReader.readDay3Input("src/test/input/Day3.txt")
     val treePresenceList = input.first
     val numberOfColumns = input.second
     val numberOfRows = input.third
@@ -105,7 +77,7 @@ class AdventCalendarTests {
     slopes.add(Pair(7,1))
     slopes.add(Pair(1,2))
 
-    val input = readDay3Input()
+    val input = InputReader.readDay3Input("src/test/input/Day3.txt")
     val treePresenceList = input.first
     val numberOfColumns = input.second
     val numberOfRows = input.third
@@ -126,30 +98,5 @@ class AdventCalendarTests {
     }
     assertEquals(1_718_180_100, result)
   }
-
-  private fun readDay3Input(): Triple<List<Boolean>, Int, Int> {
-    val treePresenceList = mutableListOf<Boolean>()
-    var numberOfColumns = 0
-    var numberOfRows = 0
-
-    File("src/test/input/Day3.txt").forEachLine { it ->
-      val charOnRow = it.toCharArray()
-      numberOfColumns = charOnRow.count()
-      numberOfRows++
-      charOnRow.map {
-        treePresenceList.add(it == '#')
-      }
-    }
-    return Triple(treePresenceList, numberOfColumns, numberOfRows)
-  }
-
-  private fun readDay1Input(): List<Int> {
-    val expenseReport = mutableListOf<Int>()
-
-    File("src/test/input/Day1.txt").useLines {
-      lines -> expenseReport.addAll(
-      lines.map { it.toInt() })
-    }
-    return expenseReport
-  }
+  
 }
