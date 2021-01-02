@@ -104,10 +104,11 @@ class AdventCalendar {
 
   /*
     https://adventofcode.com/2020/day/3
-    Starting at the top-left corner of your map and following a slope of right 3 and down 1,
-    how many trees would you encounter?
+    Starting at the top-left corner of your map and following a slope of
+    right moveRightCount and down moveDownCount, how many trees would you encounter?
    */
-  fun day3(treePresenceList: List<Boolean>, numberOfRows: Int, numberOfColumns: Int):Int {
+  fun day3(treePresenceList: List<Boolean>, numberOfRows: Int, numberOfColumns: Int,
+    moveRightCount: Int, moveDownCount: Int):Int {
     var currentXIndex = 0
     var currentYIndex = 0
     var numberOfTreesFound = 0
@@ -115,9 +116,9 @@ class AdventCalendar {
     // continue moving through the map until we reach the end of the y-axis
     while (currentYIndex < numberOfRows - 1) {
 
-      // move right by 3, but wrap around if necessary since the map pattern repeats on the right
-      currentXIndex = (currentXIndex + 3) % numberOfColumns
-      currentYIndex+=1 // move down by 1
+      // move right by moveRightCount, but wrap around if necessary since the map pattern repeats on the right
+      currentXIndex = (currentXIndex + moveRightCount) % numberOfColumns
+      currentYIndex+=moveDownCount // move down by moveDownCount
 
       val currentIndex = (currentXIndex) + (currentYIndex * numberOfColumns)
       if (treePresenceList[currentIndex]) {

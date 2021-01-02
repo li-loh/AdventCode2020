@@ -73,7 +73,61 @@ class AdventCalendarTests {
   }
 
   @Test
-  fun day3Test() {
+  // Starting at the top-left corner of your map and following a slope of
+  // mvoe right 3 and down 1, how many trees would you encounter?
+  fun day3Part1Test() {
+    val moveDownCount = 1
+    val moveRightCount = 3
+
+    val input = readDay3Input()
+    val treePresenceList = input.first
+    val numberOfColumns = input.second
+    val numberOfRows = input.third
+
+    val result = adventCalendar.day3(treePresenceList, numberOfRows, numberOfColumns,
+      moveRightCount, moveDownCount)
+
+    assertEquals(189, result)
+  }
+
+  @Test
+  // What do you get if you multiply together the number of trees encountered on each of the listed slopes?
+  // Right 1, down 1.
+  // Right 3, down 1.
+  // Right 5, down 1.
+  // Right 7, down 1.
+  // Right 1, down 2.
+  fun day3Part2Test() {
+    val slopes = mutableListOf<Pair<Int, Int>>()
+    slopes.add(Pair(1,1))
+    slopes.add(Pair(3,1))
+    slopes.add(Pair(5,1))
+    slopes.add(Pair(7,1))
+    slopes.add(Pair(1,2))
+
+    val input = readDay3Input()
+    val treePresenceList = input.first
+    val numberOfColumns = input.second
+    val numberOfRows = input.third
+
+    var result = 0
+
+    for (slope in slopes) {
+      val numberOfTrees = adventCalendar.day3(treePresenceList, numberOfRows, numberOfColumns,
+        slope.first, slope.second)
+
+      if (result == 0){
+        result = numberOfTrees
+      }
+      else {
+        result *= numberOfTrees
+      }
+
+    }
+    assertEquals(1_718_180_100, result)
+  }
+
+  private fun readDay3Input(): Triple<List<Boolean>, Int, Int> {
     val treePresenceList = mutableListOf<Boolean>()
     var numberOfColumns = 0
     var numberOfRows = 0
@@ -86,10 +140,7 @@ class AdventCalendarTests {
         treePresenceList.add(it == '#')
       }
     }
-
-    val result = adventCalendar.day3(treePresenceList, numberOfRows, numberOfColumns)
-
-    assertEquals(189, result)
+    return Triple(treePresenceList, numberOfColumns, numberOfRows)
   }
 
   private fun readDay1Input(): List<Int> {
